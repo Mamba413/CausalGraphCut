@@ -7,7 +7,7 @@ This repository contains the implementation for the paper "[Balancing Interferen
 
 This paper focuses on the design of spatial experiments to optimize the amount of information derived from the experimental data and enhance the accuracy of the resulting causal effect estimator. We propose a surrogate function for the mean squared error of the estimator, which facilitates the use of classical graph cut algorithms to learn the optimal design. Our proposal offers three key advances: (1) it accommodates moderate to large spatial interference effects; (2) it adapts to different spatial covariance functions; (3) it is computationally efficient.
 
-![](figure/m-cut.pdf)
+![](figure/m-cut.png)
 
 ### Reproduction guidance
 
