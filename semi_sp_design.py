@@ -604,7 +604,7 @@ if __name__ == "__main__":
     block_size = 4
     grid_size=12
     ## Both settings 'semi-static' and 'homo-semi-static' are available
-    env = EnvSimulator(rho=0.1, model_type="semi-static", grid_size=12)
+    env = EnvSimulator(rho=0.1, model_type="semi-static", grid_size=grid_size)
     R = grid_size ** 2
     print("True tau:", env.tau)
     model = RandomForestRegressor(random_state=0, n_estimators=10)
