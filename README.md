@@ -19,7 +19,7 @@ This paper focuses on the design of spatial experiments to optimize the amount o
 
 ### Using the method
 
-**Warm-up**. If you can assess the _spatial covariance_, then you can follow these steps:
+**Warm-up**. If you can assess the _spatial covariance_, then you can employ _oracel_ causal graph cut by following these steps:
 
 ```python
 ### 1. configure the double robust estimator
@@ -40,6 +40,22 @@ spat_cluster, _ = multi_graph_cut(W=W, V=V)
 c_design = ClusterDesign(p=0.5, W=W, cluster=spat_cluster)
 semi_est.update_design(c_design)
 hat_tau_C, _ = semi_est.estimate(your_env, N=100)
+print("Estimator:", hat_tau_C)
+```
+
+**More realistic cases**. Iteratively estimate spatial covariance via the **causal graph cut** by following these steps:
+
+```python
+### configure the double robust estimator as previous
+from sklearn.ensemble import RandomForestRegressor
+from semi_sp_design import SemiEstimator
+model = RandomForestRegressor(random_state=0, n_estimators=10)
+semi_est = SemiEstimator(n_splits=2, model=model)
+
+### perform the causal graph cut algorithm
+from SemiGraphCut import online_graph_cut
+online_graph_cut(your_env, semi_est)
+hat_tau_C, _, _ = semi_est.estimate(your_env, N=100)
 print("Estimator:", hat_tau_C)
 ```
 
