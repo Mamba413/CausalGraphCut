@@ -15,8 +15,7 @@ This paper focuses on the design of spatial experiments to optimize the amount o
 - `./figure3b.sh` --> reproduce Figure 3(b)
 - `./figure6.sh` --> reproduce Figure 6
 - `./figure7.sh` --> reproduce Figure 7
-- `./figure8.sh` --> reproduce Figure 8
-- `./figure8.sh` --> reproduce Figure 9
+- `./figure8&9.sh` --> reproduce Figure 8 and Figure 9
 
 ### Using the method
 
