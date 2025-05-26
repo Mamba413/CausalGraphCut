@@ -1,5 +1,5 @@
-PYTHON_PATH="/opt/anaconda3/bin/python"
-SCRIPT_PATH="/cluster-design/sim_MSE.py"
+PYTHON_PATH="/opt/anaconda3/bin/python"  ### your python path
+SCRIPT_PATH="/CausalGraphCut/sim_MSE.py"  ### the path of sim_MSE.py
 
 cor_types=("example1" "example2" "example3")
 pattern_types=("circle_hexagon" "hexagon" "fan_hexagon" "rectangle_hexagon")
