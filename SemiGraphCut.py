@@ -124,7 +124,7 @@ def online_graph_cut(env, semi_est, sample_num, batch_size=5, prob=0.5, init_des
             )
         tau_value_list[i] = tau_value
     hat_tau = np.mean(tau_value_list)
-    return hat_tau, hat_V, 
+    return hat_tau, gc_cluster, hat_V
 
 if __name__ == "__main__":
     from data import *
