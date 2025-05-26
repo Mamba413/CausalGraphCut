@@ -1,11 +1,8 @@
-from RSemiGraphCut import recursive_graph_cut
 from SemiGraphCut import multi_graph_cut
 from data import *
 import argparse
-# from semi_sp_design import (
-from semi_sp_design_norepeat import (
-    # SemiEstimator,
-    SemiEstimatorNoRepeat,
+from semi_sp_design import (
+    SemiEstimator,
     ClusterDesign,
     IndividualDesign,
     GlobalDesign,
@@ -53,8 +50,7 @@ if __name__ == "__main__":
     LOC_NOISE = args.loc_std
     NREP = args.nrep
     M_MAX = args.m_max
-    # SAMPLE_NUM = args.sample_num
-    SAMPLE_NUM = 1
+    SAMPLE_NUM = args.sample_num
 
     METHOD_LIST = [
         "Global",
@@ -81,6 +77,7 @@ if __name__ == "__main__":
         grid_size=GRID_SIZE,
     )
     W = env.get_adj_matrix()
+    V = env.get_cov_matrix()
     R = W.shape[0]
     true_tau = env.tau
 
@@ -107,8 +104,7 @@ if __name__ == "__main__":
 
     for r in tqdm(range(NREP)):
         model = RandomForestRegressor(random_state=r, n_estimators=10, min_samples_leaf=1)
-        # semi_est = SemiEstimator(n_splits=2, model=model)
-        semi_est = SemiEstimatorNoRepeat(model=model)
+        semi_est = SemiEstimator(n_splits=2, model=model)
         if "Global" in METHOD_LIST:
             g_design = GlobalDesign(PROB, W)
             semi_est.update_design(g_design)
