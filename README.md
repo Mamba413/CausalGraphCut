@@ -13,12 +13,14 @@ This paper focuses on the design of spatial experiments to optimize the amount o
 
 - Change your working directory to this main folder, run `setup.sh` to configure the environment and install all requirements.
 - `./figure3b.sh` --> reproduce Figure 3(b)
-- `./figure6&8.sh` --> reproduce Figure 6 and Figure 8
+- `./figure6.sh` --> reproduce Figure 6
 - `./figure7.sh` --> reproduce Figure 7
+- `./figure8.sh` --> reproduce Figure 8
+- `./figure8.sh` --> reproduce Figure 9
 
 ### Using the method
 
-If you can assess the **environment**, then you can follow these steps:
+**Warm-up**. If you can assess the _spatial covariance_, then you can follow these steps:
 
 ```python
 ### 1. configure the double robust estimator
@@ -28,11 +30,11 @@ from semi_sp_design import SemiEstimator
 model = RandomForestRegressor(random_state=0, n_estimators=10)
 semi_est = SemiEstimator(n_splits=2, model=model)
 
-### 2. get spatial clusters by causal graph cut
+### 2. get spatial clusters by (oracle) causal graph cut
 from SemiGraphCut import multi_graph_cut
 
-W = env.get_adj_matrix()
-V = env.get_cov_matrix()
+W = your_env.get_adj_matrix()
+V = your_env.get_cov_matrix()
 spat_cluster, _ = multi_graph_cut(W=W, V=V)
 
 ### 3. get the ATE estimation based on the cluster design
