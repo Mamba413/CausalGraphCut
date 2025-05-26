@@ -16,9 +16,9 @@ This paper focuses on the design of spatial experiments to optimize the amount o
 - `./figure6&8.sh` --> reproduce Figure 6 and Figure 8
 - `./figure7.sh` --> reproduce Figure 7
 
-### Usage the proposed method
+### Using the method
 
-If you can assess the environment, then you can follow these steps:
+If you can assess the **environment**, then you can follow these steps:
 
 ```python
 ### 1. configure the double robust estimator
