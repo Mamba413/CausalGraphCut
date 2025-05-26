@@ -6,9 +6,10 @@ import numpy as np
 
 from utils_semi import *
 import os
-from utils import onehot_trans
+from utils import onehot_trans, label2dict
 from utils_semi import MSE_global
 from utils_cluster import SpectralClustering
+from semi_sp_design import IndividualDesign, ClusterDesign
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
@@ -85,6 +86,45 @@ def multi_graph_cut(
     x_m = [x_m[i] for i in np.argsort(-obj_value)]
     return x_m, np.sort(obj_value)[::-1]
 
+def online_graph_cut(env, semi_est, sample_num, batch_size=5, prob=0.5, init_design=None, seed=1, m_max=None):
+    batch_size = 5
+    num_sample_iter = int(sample_num / batch_size)
+    tau_value_list = np.zeros(num_sample_iter)
+    for i in range(num_sample_iter):
+        if i == 0:
+            if init_design is None:
+                init_design = IndividualDesign(p=prob, W=W)
+            semi_est.update_design(init_design)
+            tau_value, prev_data, hat_V = semi_est.estimate(
+                env,
+                N=batch_size,
+                seed=seed,
+                random=True,
+                regression_type='pool', 
+                return_cov=True,
+            )
+        else:
+            gc_cluster, _ = multi_graph_cut(
+                W=W,
+                V=hat_V,
+                m_max=m_max,
+                verbose=False,
+            )
+            gc_cluster = gc_cluster[-1]
+            c_design = ClusterDesign(prob, W, label2dict(gc_cluster))
+            semi_est.update_design(c_design)
+            tau_value, prev_data, hat_V = semi_est.estimate(
+                env,
+                N=batch_size,
+                seed=seed+i,
+                random=True,
+                regression_type='pool', 
+                prev_data=prev_data,
+                return_cov=True,
+            )
+        tau_value_list[i] = tau_value
+    hat_tau = np.mean(tau_value_list)
+    return hat_tau, hat_V, 
 
 if __name__ == "__main__":
     from data import *
